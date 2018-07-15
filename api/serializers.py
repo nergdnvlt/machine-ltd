@@ -7,5 +7,9 @@ class DeviceSerializer(serializers.ModelSerializer):
         model = Device
         fields = [
             'id',
-            'location',
+            'location_1',
+            'location_2',
+            'location_3',
+            'location_4',
+            'location_5',
         ]
