@@ -1,9 +1,9 @@
-from mongoengine import *
+from django.db import models
 
 
-class Device(Document):
-    device_id = IntField(default=0)
-    location = StringField(max_length=300)
-
-    class Meta:
-        abstract = True
+class Device(models.Model):
+    location_1 = models.CharField(max_length=300)
+    location_2 = models.CharField(max_length=300)
+    location_3 = models.CharField(max_length=300)
+    location_4 = models.CharField(max_length=300)
+    location_5 = models.CharField(max_length=300)

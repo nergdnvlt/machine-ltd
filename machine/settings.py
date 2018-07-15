@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import mongoengine
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'machine.herokuapp.com',
+    'machine-ltd.herokuapp.com',
 ]
 
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'dj_database_url',
     'api',
 ]
 
@@ -81,29 +82,20 @@ WSGI_APPLICATION = 'machine.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': '',
-    },
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'machine-ltd',
+    }
 }
 
-SESSION_ENGINE = 'mongoengine.django.sessions'
+env = os.environ.copy()
+db_url = env.get('DATABASE_URL', False)
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'djongo',
-#         'NAME': 'machine-db',
-#     }
-# }
+if db_url != False:
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 
 # Password validation
