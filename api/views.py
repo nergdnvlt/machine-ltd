@@ -8,10 +8,6 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 import json
 
-from IPython import embed
-# Create your views here.
-
-
 class DeviceViews(viewsets.ViewSet):
 
     def retrieve(self, request, device_id=None):
@@ -20,4 +16,4 @@ class DeviceViews(viewsets.ViewSet):
         return Response(serializer.data)
 
     def update(self, request, device_id=None):
-        embed()
+        print(request.data)
