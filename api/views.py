@@ -8,6 +8,25 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 import json
 
+
+class UserViews(viewsets.ViewSet):
+
+    def list(self, request):
+        print(request.data)
+
+    def create(self, request):
+        print(request.data)
+
+    def retrieve(self, request, pk=None):
+        print(request.data)
+
+    def update(self, request, pk=None):
+        print(request.data)
+
+    def delete(self, request, pk=None):
+        print(request.data)
+
+
 class DeviceViews(viewsets.ViewSet):
 
     def retrieve(self, request, device_id=None):
@@ -15,5 +34,5 @@ class DeviceViews(viewsets.ViewSet):
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data)
 
-    def update(self, request, device_id=None):
+    def update_location(self, request, device_id=None):
         print(request.data)
