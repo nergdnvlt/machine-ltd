@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'phone_number',
             'device_number',
-            'redius'
+            'radius'
         ]
 
 class DeviceSerializer(serializers.ModelSerializer):

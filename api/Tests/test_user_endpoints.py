@@ -22,6 +22,6 @@ class UserEndpointTest(TestCase):
         user = response.json()
 
         self.assertEqual(user['username'], 'Thor')
-        self.assertEqual(user['phone_number'], '7196639883')
-        self.assertEqual(user['device_number'], '7192710056')
+        self.assertEqual(user['phone_number'], '7195558888')
+        self.assertEqual(user['device_number'], '7194447777')
         self.assertEqual(user['radius'], 5)
