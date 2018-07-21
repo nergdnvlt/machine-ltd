@@ -22,14 +22,39 @@ class UserViews(viewsets.ViewSet):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request, pk=None):
-        print(request.data)
+    def retrieve(self, request, user_id=None):
+        user = get_object_or_404(User, id=user_id)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
 
-    def update(self, request, pk=None):
-        print(request.data)
+    def update(self, request, user_id=None):
+        user = self.__user_update__(request, user_id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
-    def delete(self, request, pk=None):
-        print(request.data)
+    def partial_update(self, request, user_id=None):
+        user = self.__user_update__(request, user_id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def destroy(self, request, user_id=None):
+        user = get_object_or_404(User, id=user_id)
+        user.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+    def __user_update__(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        user_attrs = request.data['user']
+        if 'username' in user_attrs.keys():
+            user.username = user_attrs['username']
+        if 'phone_number' in user_attrs.keys():
+            user.phone_number = user_attrs['phone_number']
+        if 'device_number' in user_attrs.keys():
+            user.device_number = user_attrs['device_number']
+        if 'radius' in user_attrs.keys():
+            user.radius = user_attrs['radius']
+        user.save()
+        return user
 
 
 class DeviceViews(viewsets.ViewSet):
