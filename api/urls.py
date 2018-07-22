@@ -8,6 +8,5 @@ urlpatterns = [
                                                   'put': 'update',
                                                   'patch': 'partial_update',
                                                   'delete': 'destroy'})),
-    path('v1/devices/<device_id>', DeviceViews.as_view({'get': 'retrieve',
-                                                        'post': 'update_location'})),
+    path('v1/devices/<device_id>', DeviceViews.as_view({'get': 'retrieve', 'post': 'update_location'})),
 ]

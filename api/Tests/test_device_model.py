@@ -1,8 +1,6 @@
 from django.test import TestCase
-
 from api.models import Device
 
-# Create your tests here.
 class DeviceModelTestCase(TestCase):
 
     def test_device_saves_to_db(self):
