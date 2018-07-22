@@ -65,6 +65,7 @@ class DeviceViews(viewsets.ViewSet):
         return Response(serializer.data)
 
     def update_location(self, request, device_id=None):
+        print(f'Here is the request information: {request.data}')
         device = get_object_or_404(Device, id=device_id)
         new_location = request.data['location']
         if new_location != device.location_1:
