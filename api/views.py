@@ -45,15 +45,7 @@ class UserViews(viewsets.ViewSet):
     def __user_update__(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
         user_attrs = request.data['user']
-        if 'username' in user_attrs.keys():
-            user.username = user_attrs['username']
-        if 'phone_number' in user_attrs.keys():
-            user.phone_number = user_attrs['phone_number']
-        if 'device_id' in user_attrs.keys():
-            user.device_id = user_attrs['device_id']
-        if 'radius' in user_attrs.keys():
-            user.radius = user_attrs['radius']
-        user.save()
+        user.update_user(user_attrs)
         return user
 
 
@@ -67,13 +59,6 @@ class DeviceViews(viewsets.ViewSet):
     def update_location(self, request, device_id=None):
         print(f'Here is the request information: {request.data}')
         device = get_object_or_404(Device, id=device_id)
-        new_location = request.data['location']
-        if new_location != device.location_1:
-            old_loc_1 = device.location_1
-            old_loc_2 = device.location_2
-            device.location_1 = new_location
-            device.location_2 = old_loc_1
-            device.location_3 = old_loc_2
-        device.save()
+        device.update_location(request.data['location'])
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data)
