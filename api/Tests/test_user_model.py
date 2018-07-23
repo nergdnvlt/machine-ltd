@@ -10,7 +10,6 @@ class UserModelTestCase(TestCase):
         count = User.objects.count()
         self.assertEqual(user.username, 'Thrasher')
         self.assertEqual(user.phone_number, '7196639883')
-        self.assertEqual(user.radius, 5)
         self.assertEqual(count, 1)
 
     def test_additional_user_saves(self):
@@ -24,5 +23,4 @@ class UserModelTestCase(TestCase):
         last_user = User.objects.last()
         self.assertEqual(last_user.username, 'Fluffy')
         self.assertEqual(last_user.phone_number, '7198839888')
-        self.assertEqual(last_user.radius, 5)
         self.assertEqual(second_count, 2)

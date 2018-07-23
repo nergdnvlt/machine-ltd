@@ -8,7 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'phone_number',
             'device_id',
-            'radius'
         ]
 
 class DeviceSerializer(serializers.ModelSerializer):
@@ -17,7 +16,4 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'sms_number',
-            'location_1',
-            'location_2',
-            'location_3',
         ]
