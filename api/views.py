@@ -69,11 +69,7 @@ class DeviceViews(viewsets.ViewSet):
         device = get_object_or_404(Device, id=device_id)
         new_location = request.data['location']
         if new_location != device.location_1:
-            old_loc_1 = device.location_1
-            old_loc_2 = device.location_2
-            device.location_1 = new_location
-            device.location_2 = old_loc_1
-            device.location_3 = old_loc_2
+            device.update_location(new_location)
         device.save()
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data)
