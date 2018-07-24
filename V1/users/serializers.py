@@ -8,5 +8,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'phone_number',
-            'device_id',
         ]
