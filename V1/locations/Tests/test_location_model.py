@@ -4,6 +4,7 @@ from V1.devices.models import Device
 from V1.users.models import User
 
 # python manage.py test V1/locations/tests
+from IPython import embed
 
 class LocationModelTestCase(TestCase):
 
@@ -25,7 +26,8 @@ class LocationModelTestCase(TestCase):
         self.assertEqual(saved_location.device.id, device.id)
         self.assertEqual(count, 1)
 
-    def test_device_calculates_distance(self):
+
+    def test_device_calculates_distance_for_same_cords(self):
         user = User.objects.create(username='Thrasher',
                                    phone_number='7196639883',)
         device = Device.objects.create(user=user,
@@ -40,3 +42,20 @@ class LocationModelTestCase(TestCase):
         self.assertEqual(saved_location.lat, 39.996665)
         self.assertEqual(saved_location.long, -105.234931)
         self.assertEqual(saved_location.distance, 0)
+
+
+    def test_device_calculates_distance_for_dif_cords(self):
+        user = User.objects.create(username='Thrasher',
+                                   phone_number='7196639883',)
+        device = Device.objects.create(user=user,
+                                       sms_number='7192710056',
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931)
+
+        input_location = Location.objects.create(device=device, lat=39.985555, long=-105.235555)
+
+        saved_location = Location.objects.first()
+
+        self.assertEqual(saved_location.lat, 39.985555)
+        self.assertEqual(saved_location.long, -105.235555)
+        self.assertEqual(saved_location.distance, 1234.74348675545)
