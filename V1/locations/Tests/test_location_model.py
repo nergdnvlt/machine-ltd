@@ -1,6 +1,5 @@
 from django.test import TestCase
 from V1.locations.models import Location
-from V1.users.models import User
 from V1.devices.models import Device
 
 # python manage.py test V1/locations/tests
@@ -8,8 +7,6 @@ from V1.devices.models import Device
 class LocationModelTestCase(TestCase):
 
     def test_device_saves_to_db(self):
-        user = User.objects.create(username='Thrasher',
-                                   phone_number='7196639883',)
         device = Device.objects.create(sms_number='7192710056')
 
         input_location = Location.objects.create(user=user, device=device, location='[39.996665, -105.234931]')
