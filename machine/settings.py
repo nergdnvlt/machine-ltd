@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'dj_database_url',
     'V1',
+    'V1.devices',
+    'V1.locations',
+    'V1.users',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +84,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'machine.wsgi.application'
 
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 # Database
 DATABASES = {
