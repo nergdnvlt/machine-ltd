@@ -1,5 +1,6 @@
+
 from rest_framework import serializers
-from api.models import Device, User
+from V1.users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,12 +9,4 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'phone_number',
             'device_id',
-        ]
-
-class DeviceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Device
-        fields = [
-            'id',
-            'sms_number',
         ]

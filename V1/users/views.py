@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from api.models import Device, User
-from api.serializers import DeviceSerializer, UserSerializer
+from V1.users.models import User
+from V1.users.serializers import UserSerializer
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -47,18 +47,3 @@ class UserViews(viewsets.ViewSet):
         user_attrs = request.data['user']
         user.update_user(user_attrs)
         return user
-
-
-class DeviceViews(viewsets.ViewSet):
-
-    def retrieve(self, request, device_id=None):
-        device = get_object_or_404(Device, id=device_id)
-        serializer = DeviceSerializer(device, many=False)
-        return Response(serializer.data)
-
-    def update_location(self, request, device_id=None):
-        print(f'Here is the request information: {request.data}')
-        device = get_object_or_404(Device, id=device_id)
-        device.update_location(request.data['location'])
-        serializer = DeviceSerializer(device, many=False)
-        return Response(serializer.data)

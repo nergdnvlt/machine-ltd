@@ -1,12 +1,9 @@
 [
   {
-    "model": "api.device",
+    "model": "V1.device",
     "pk": 1,
     "fields": {
-      "sms_number": "7192710056",
-      "location_1": "[39.996292, -105.23503]",
-      "location_2": "[39.996292, -105.23503]",
-      "location_3": "[39.996292, -105.23503]"
+      "sms_number": "7192710056"
     }
   }
 ]
