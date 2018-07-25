@@ -7,4 +7,7 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'sms_number',
+            'pin_lat',
+            'pin_long',
+            'radius',
         ]
