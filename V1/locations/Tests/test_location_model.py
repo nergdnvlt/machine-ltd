@@ -80,8 +80,8 @@ class LocationModelTestCase(TestCase):
         location_5 = Location.objects.create(device=device, lat=34.985555, long=-105.235555)
 
         locations = Location.objects.all()
-        self.assertEqual(locations[0], location_1)
-        self.assertEqual(locations[1], location_2)
+        self.assertEqual(locations[0], location_5)
+        self.assertEqual(locations[1], location_4)
         self.assertEqual(locations[2], location_3)
-        self.assertEqual(locations[3], location_4)
-        self.assertEqual(locations[4], location_5)
+        self.assertEqual(locations[3], location_2)
+        self.assertEqual(locations[4], location_1)

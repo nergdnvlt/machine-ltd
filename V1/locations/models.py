@@ -4,7 +4,7 @@ from geopy.distance import geodesic
 from V1.devices.models import Device
 
 class Location(models.Model):
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, related_name='locations', on_delete=models.CASCADE)
     lat = models.FloatField()
     long = models.FloatField()
     distance = models.FloatField(null=True)
@@ -23,4 +23,4 @@ class Location(models.Model):
         self.distance = geodesic(pin_cord, cord).meters
 
     class Meta:
-        ordering = ('timestamp',)
+        ordering = ('-timestamp',)
