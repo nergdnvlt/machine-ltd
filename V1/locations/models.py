@@ -21,3 +21,6 @@ class Location(models.Model):
         pin_cord = (self.device.pin_lat, self.device.pin_long)
         cord = (self.lat, self.long)
         self.distance = geodesic(pin_cord, cord).meters
+
+    class Meta:
+        ordering = ('timestamp',)
