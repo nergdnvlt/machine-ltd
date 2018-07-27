@@ -20,14 +20,17 @@ class DeviceViews(viewsets.ViewSet):
 
     def add_location(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
-        location = self.__parse_location_data(device, request)
+        location = self.__parse_location_data__(device, request)
         if location.id:
             serializer = DeviceSerializer(device, many=False)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if device.radius >= location.distance:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.data, status=status.HTTP_303_SEE_OTHER)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def __parse_location_data(self, device, request):
+    def __parse_location_data__(self, device, request):
         location = json.loads(request.body)
         loc_lat = float(location['lat'])
         loc_long = float(location['long'])
