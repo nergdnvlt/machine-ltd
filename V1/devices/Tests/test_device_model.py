@@ -68,3 +68,19 @@ class DeviceModelTestCase(TestCase):
         self.assertEqual(device.locations.first().id, loc_2.id)
         self.assertEqual(device.locations.first().lat, 39.996292)
         self.assertEqual(device.locations.first().long, -105.23503)
+
+    def test_location_saves_to_device(self):
+        user = User.objects.create(username='Thrasher',
+                                   phone_number='7196639883',)
+        device = Device.objects.create(user=user,
+                              sms_number='7192710056',
+                              pin_lat=39.996665,
+                              pin_long=-105.234931)
+        loc_1 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
+        loc_2 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
+
+        last_location = device.latest_location()
+
+        self.assertEqual(last_location.id, loc_2.id)
+        self.assertEqual(last_location.lat, 39.996292)
+        self.assertEqual(last_location.long, -105.23503)
