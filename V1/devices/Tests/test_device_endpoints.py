@@ -95,3 +95,9 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(device['id'], self.device.id)
         self.assertEqual(device['last_location']['lat'], 39.996291)
         self.assertEqual(device['last_location']['long'], -105.23502)
+
+    def test_alert_if_location_greater_than_radius(self):
+        response = self.client.post(f'/api/v1/devices/{self.device.id}', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        embed()
+        self.assertTrue(device['last_location']['distance'] > device['radius'])
