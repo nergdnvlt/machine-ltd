@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from V1.devices.models import Device
 from V1.locations.models import Location
 from V1.devices.serializers import DeviceSerializer
+from V1.locations.serializers import LocationSerializer
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -15,14 +16,21 @@ class DeviceViews(viewsets.ViewSet):
     def retrieve(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
         serializer = DeviceSerializer(device, many=False)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update_location(self, request, device_id=None):
+    def add_location(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
-        location_hash = json.loads(request.body)
-        print(f'Here is the request information: {location_hash}')
-        Location.objects.create(device=device,
-                                lat=location_hash['location']['lat'],
-                                long=location_hash['location']['long'])
-        serializer = DeviceSerializer(device, many=False)
-        return Response(serializer.data)
+        location = self.__parse_location_data(device, request)
+        if location.id:
+            serializer = DeviceSerializer(device, many=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def __parse_location_data(self, device, request):
+        location = json.loads(request.body)
+        loc_lat = float(location['lat'])
+        loc_long = float(location['long'])
+        location = Location(device=device, lat=loc_lat, long=loc_long)
+        location.save()
+        return location
