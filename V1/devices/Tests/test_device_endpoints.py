@@ -64,3 +64,17 @@ class DeviceEndpointTest(TestCase):
 
         self.assertEqual(last_device_response['last_location']['id'], loc_4.id)
         self.assertEqual(last_device_response['last_location']['distance'], loc_4.distance)
+
+    def test_history_of_device_location(self):
+        loc_1 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_2 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_3 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_4 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+
+        response = self.client.get(f'/api/v1/devices/{self.device.id}/history')
+        history = response.json()
+
+        self.assertEqual(history[0].id, loc_4.id)
+        self.assertEqual(history[1].id, loc_3.id)
+        self.assertEqual(history[2].id, loc_2.id)
+        self.assertEqual(history[3].id, loc_1.id)
