@@ -5,7 +5,7 @@ from V1.devices.models import Device
 from V1.users.models import User
 from V1.locations.models import Location
 import json
-
+from IPython import embed
 # python manage.py test V1/devices/tests
 
 class DeviceEndpointTest(TestCase):
@@ -90,9 +90,8 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(history[3]['distance'], loc_1.distance)
 
     def test_post_location_to_device(self):
-        response = self.client.post(f'/api/v1/devices/{self.device.id}', {'location': '[39.996291, -105.23502]'}, format='json')
+        response = self.client.post(f'/api/v1/devices/{self.device.id}', { 'location': [39.996291, -105.23502] }, format='json')
         device = response.json()
-        embed()
         self.assertEqual(device['id'], self.device.id)
         self.assertEqual(device['last_location']['lat'], 39.996291)
         self.assertEqual(device['last_location']['long'], -105.23502)
