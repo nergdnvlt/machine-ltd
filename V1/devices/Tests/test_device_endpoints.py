@@ -35,22 +35,32 @@ class DeviceEndpointTest(TestCase):
     def test_adding_same_locations_to_device(self):
         loc_1 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
         loc_2 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_3 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_4 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
 
         response = self.client.get(f'/api/v1/devices/{self.device.id}')
         device = response.json()
 
-        self.assertEqual(device['locations'][0]['id'], loc_2.id)
-        self.assertEqual(device['locations'][0]['distance'], loc_2.distance)
-        self.assertEqual(device['locations'][1]['id'], loc_1.id)
-        self.assertEqual(device['locations'][0]['distance'], loc_1.distance)
+        self.assertEqual(device['last_location']['id'], loc_4.id)
+        self.assertEqual(device['last_location']['distance'], loc_4.distance)
+        self.assertEqual((loc_1.id in device['last_location'].values()), False)
+        self.assertEqual((loc_2.id in device['last_location'].values()), False)
+        self.assertEqual((loc_3.id in device['last_location'].values()), False)
 
-#
-#     def test_single_device_history(self):
-#         # Get a history of the location of the device
-#         None
-#
-#     def test_update_device_location(self):
-#         response = self.client.post(f'/api/v1/devices/{self.device.id}', {'location': '[36.996663, -103.234930]'}, format='json')
-#         device = response.json()
-#
-#         self.assertEqual(device['id'], self.device.id)
+    def test_update_device_location(self):
+        loc_1 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_2 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        loc_3 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+
+        response = self.client.get(f'/api/v1/devices/{self.device.id}')
+        first_device = response.json()
+
+        self.assertEqual(first_device['last_location']['id'], loc_3.id)
+        self.assertEqual(first_device['last_location']['distance'], loc_3.distance)
+
+        loc_4 = Location.objects.create(device=self.device, lat=39.996292, long=-105.23503)
+        response = self.client.get(f'/api/v1/devices/{self.device.id}')
+        last_device_response = response.json()
+
+        self.assertEqual(last_device_response['last_location']['id'], loc_4.id)
+        self.assertEqual(last_device_response['last_location']['distance'], loc_4.distance)
