@@ -1,9 +1,21 @@
 [
   {
+    "model": "V1.user",
+    "pk": 1,
+    "fields": {
+      "username": "fatherWar",
+      "phone_number": "7196639883"
+    }
+  },
+  {
     "model": "V1.device",
     "pk": 1,
     "fields": {
-      "sms_number": "7192710056"
+      "user": User.objects.first(),
+      "sms_number": "7192710056",
+      "radius": 500,
+      "pin_lat": 39.996292,
+      "pin_long": -105.23503,
     }
   }
 ]
