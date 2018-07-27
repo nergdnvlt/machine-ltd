@@ -19,10 +19,10 @@ class DeviceViews(viewsets.ViewSet):
 
     def update_location(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
-        location = request.data['location']
-        print(f'Here is the request information: {location}')
+        location_hash = json.loads(request.body)
+        print(f'Here is the request information: {location_hash}')
         Location.objects.create(device=device,
-                                lat=location['lat'],
-                                long=location['long'])
+                                lat=location_hash['location']['lat'],
+                                long=location_hash['location']['long'])
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data)
