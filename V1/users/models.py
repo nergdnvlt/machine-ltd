@@ -12,3 +12,6 @@ class User(models.Model):
             self.phone_number = user_attrs['phone_number']
         self.save()
         return self
+
+    class Meta:
+        db_table = 'users'

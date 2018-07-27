@@ -23,4 +23,5 @@ class Location(models.Model):
         self.distance = geodesic(pin_cord, cord).meters
 
     class Meta:
+        db_table = 'locations'
         ordering = ('-timestamp',)

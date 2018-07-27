@@ -1,11 +1,12 @@
-/* INSERT INTO devices_device VALUES (1, '7207891463', 500, 39.9965616, -105.2348832, 1); */
+/* INSERT INTO users VALUES (1, 'fatherWar', '7196639883'); */
+/* INSERT INTO devices VALUES (1, '7207891463', 500, 39.9965616, -105.2348832, 1); */
 [
   {
     "model": "V1.user",
     "pk": 1,
     "fields": {
       "username": "fatherWar",
-      "phone_number": "7196639883",
+      "phone_number": "7196639883"
     }
   },
   {
@@ -16,7 +17,7 @@
       "radius": 500,
       "pin_lat": 39.9965616,
       "pin_long": -105.2348832,
-      "user_id": 1,
+      "user_id": 1
     }
   }
 ]

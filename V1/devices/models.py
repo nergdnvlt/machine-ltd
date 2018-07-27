@@ -10,3 +10,6 @@ class Device(models.Model):
 
     def latest_location(self):
         return self.locations.first()
+
+    class Meta:
+        db_table = 'devices'
