@@ -22,7 +22,7 @@ class DeviceViews(viewsets.ViewSet):
         location = request.data['location']
         print(f'Here is the request information: {location}')
         Location.objects.create(device=device,
-                                lat=location[0],
-                                long=location[1])
+                                lat=location['lat'],
+                                long=location['long'])
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data)

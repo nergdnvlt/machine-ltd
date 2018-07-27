@@ -90,7 +90,7 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(history[3]['distance'], loc_1.distance)
 
     def test_post_location_to_device(self):
-        response = self.client.post(f'/api/v1/devices/{self.device.id}', { 'location': [39.996291, -105.23502] }, format='json')
+        response = self.client.post(f'/api/v1/devices/{self.device.id}', { 'location': {'lat': 39.996291, 'long': -105.23502} }, format='json')
         device = response.json()
         self.assertEqual(device['id'], self.device.id)
         self.assertEqual(device['last_location']['lat'], 39.996291)
