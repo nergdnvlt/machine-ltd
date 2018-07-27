@@ -7,3 +7,6 @@ class Device(models.Model):
     radius = models.IntegerField(default=500)
     pin_lat = models.FloatField()
     pin_long = models.FloatField()
+
+    def latest_location(self):
+        return self.locations.first()
