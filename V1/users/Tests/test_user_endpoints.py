@@ -28,6 +28,26 @@ class UserEndpointTest(TestCase):
         self.assertEqual(user['phone_number'], '+17196639883')
 
 
+    def test_user_create_endpoint_without_username(self):
+        user = {
+            "phone_number": "+17196639883"
+        }
+        response = self.client.post('/api/v1/users/', user, format='json')
+        user = response.json()
+
+        self.assertEqual(response.status_code, 400)
+
+
+    def test_user_create_endpoint_without_phone_number(self):
+        user = {
+            "username": "Thrasher",
+        }
+        response = self.client.post('/api/v1/users/', user, format='json')
+        user = response.json()
+
+        self.assertEqual(response.status_code, 400)
+
+
     def test_get_user_endpoint(self):
         response = self.client.get(f'/api/v1/users/{self.thrasher.id}')
         user = response.json()
@@ -50,20 +70,20 @@ class UserEndpointTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
-    def test_update_put_user_endpoint(self):
-        db_user = User.objects.create(username="Thrasher", phone_number="+17192710056")
-
-        user = {
-            "username": "Fluffy",
-            "phone_number": "+17196639883"
-
-        }
-
-        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
-        end_user = response.json()
-
-        self.assertEqual(end_user['username'], 'Fluffy')
-        self.assertEqual(end_user['phone_number'], '+17192710056')
+    # def test_update_put_user_endpoint(self):
+    #     db_user = User.objects.create(username="Thrasher", phone_number="+17192710056")
+    #
+    #     user = {
+    #         "username": "Fluffy",
+    #         "phone_number": "+17196639883"
+    #
+    #     }
+    #
+    #     response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+    #     end_user = response.json()
+    #
+    #     self.assertEqual(end_user['username'], 'Fluffy')
+    #     self.assertEqual(end_user['phone_number'], '+17192710056')
 
 
     # def test_sad_path_put_user_endpoint(self):
