@@ -10,12 +10,24 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 import json
 
+from IPython import embed
+
 class DeviceViews(viewsets.ViewSet):
 
     def retrieve(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        serializer = DeviceSerializer(data=request.data)
+        if serializer.is_valid():
+            device = serializer.save()
+            if device.id:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def add_location(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
