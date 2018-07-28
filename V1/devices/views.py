@@ -4,7 +4,7 @@ from V1.devices.models import Device
 from V1.locations.models import Location
 from V1.devices.serializers import DeviceSerializer
 from V1.locations.serializers import LocationSerializer
-from V1.devices.services import TwilioService
+# from V1.devices.services import TwilioService
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -26,7 +26,7 @@ class DeviceViews(viewsets.ViewSet):
         if location.id:
             serializer = DeviceSerializer(device, many=False)
             if device.radius >= location.distance:
-                TwilioService.send_sms(number, location.lat, location.long)
+                # TwilioService.send_sms(number, location.lat, location.long)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.data, status=status.HTTP_303_SEE_OTHER)

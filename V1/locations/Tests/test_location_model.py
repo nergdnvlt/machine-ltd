@@ -11,9 +11,9 @@ class LocationModelTestCase(TestCase):
 
     def test_device_saves_to_db(self):
         user = User.objects.create(username='Thrasher',
-                                   phone_number='7196639883',)
+                                   phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='7192710056',
+                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -30,9 +30,9 @@ class LocationModelTestCase(TestCase):
 
     def test_device_calculates_distance_for_same_cords(self):
         user = User.objects.create(username='Thrasher',
-                                   phone_number='7196639883',)
+                                   phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='7192710056',
+                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -47,9 +47,9 @@ class LocationModelTestCase(TestCase):
 
     def test_device_calculates_distance_for_dif_cords(self):
         user = User.objects.create(username='Thrasher',
-                                   phone_number='7196639883',)
+                                   phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='7192710056',
+                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -63,9 +63,9 @@ class LocationModelTestCase(TestCase):
 
     def test_ordering_of_locations(self):
         user = User.objects.create(username='Thrasher',
-                                   phone_number='7196639883',)
+                                   phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='7192710056',
+                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
