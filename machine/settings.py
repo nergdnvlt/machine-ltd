@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 import dj_database_url
 import django_heroku
+from YamJam import yamjam
+
+TWILIO_SID = yamjam()['machine']['TWILIO_ACCOUNT_SID']
+TWILIO_AUTH = yamjam()['machine']['TWILIO_AUTH_TOKEN']
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +54,7 @@ INSTALLED_APPS = [
     'V1.devices',
     'V1.locations',
     'V1.users',
+    'service_objects',
 ]
 
 MIDDLEWARE = [

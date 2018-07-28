@@ -5,7 +5,7 @@ from V1.devices.models import Device
 from V1.users.models import User
 from V1.locations.models import Location
 import json
-from IPython import embed
+
 # python manage.py test V1/devices/tests
 
 class DeviceEndpointTest(TestCase):
@@ -99,5 +99,5 @@ class DeviceEndpointTest(TestCase):
     def test_alert_if_location_greater_than_radius(self):
         response = self.client.post(f'/api/v1/devices/{self.device.id}', {"lat": "39.999291", "long": "-105.25802"}, format='json')
         device = response.json()
-        embed()
-        self.assertTrue(device['last_location']['distance'] > device['radius'])
+        self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
+        self.assertEqual(device['message'], "Sent from your Twilio trial account - You're asset has moved outside the geofence, it is at this location: lattitude: 39.999291, and longitude -105.25802")

@@ -1,27 +1,18 @@
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, JsonResponse
-from V1.devices.models import Device
-from V1.locations.models import Location
-from V1.devices.serializers import DeviceSerializer
-from V1.locations.serializers import LocationSerializer
-from rest_framework import status
-from rest_framework import viewsets
-from rest_framework.response import Response
 from twilio.rest import Client
-import os
-import json
+from service_objects.services import Service
+from django.conf import settings
 
-# class TwilioService(self):
-#     twilio_sid = os.environ['TWILIO_ACCOUNT_SID']
-#     twilio_token = os.environ['TWILIO_AUTH_TOKEN']
-#     self.client = Client(twilio_sid, twilio_token)
+class TwilioService(Service):
 
-    # def send_sms(self, number, lat, long):
-    #     self.client.messages.create(
-    #         to=number,
-    #         from="+17205130638",
-    #         body=f'You\'re asset has moved outside the geofence, it is at this location: lattitude: {lat}, and longitude {long}'
-    #     )
+    def __init__(self):
+        self.twilio_sid = settings.TWILIO_SID
+        self.twilio_token = settings.TWILIO_AUTH
+        self.client = Client(self.twilio_sid, self.twilio_token)
 
-
-# Phone number formatting - string - "+17196639883"
+    def send_sms(self, number, lat, long):
+        message = self.client.messages.create(
+            to=number,
+            from_='+17205130638',
+            body=f'You\'re asset has moved outside the geofence, it is at this location: lattitude: {lat}, and longitude {long}'
+        )
+        return message.body

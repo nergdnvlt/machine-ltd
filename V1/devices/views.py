@@ -4,13 +4,11 @@ from V1.devices.models import Device
 from V1.locations.models import Location
 from V1.devices.serializers import DeviceSerializer
 from V1.locations.serializers import LocationSerializer
-# from V1.devices.services import TwilioService
+from V1.devices.services import TwilioService
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 import json
-
-from IPython import embed
 
 class DeviceViews(viewsets.ViewSet):
 
@@ -22,12 +20,11 @@ class DeviceViews(viewsets.ViewSet):
     def add_location(self, request, device_id=None):
         device = get_object_or_404(Device, id=device_id)
         location = self.__parse_location_data__(device, request)
-        number = device.user.phone_number
         if location.id:
             serializer = DeviceSerializer(device, many=False)
-            if device.radius >= location.distance:
-                # TwilioService.send_sms(number, location.lat, location.long)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if device.radius <= location.distance:
+                message = TwilioService().send_sms(device.user.phone_number, location.lat, location.long)
+                return Response({"device": serializer.data, "message": message}, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.data, status=status.HTTP_303_SEE_OTHER)
         else:
