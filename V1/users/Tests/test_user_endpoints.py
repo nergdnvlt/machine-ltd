@@ -3,7 +3,7 @@ from rest_framework import status
 from django.test import TestCase
 from V1.users.models import User
 import json
-
+from IPython import embed
 # python manage.py test V1/users/tests
 
 class UserEndpointTest(TestCase):
@@ -17,11 +17,35 @@ class UserEndpointTest(TestCase):
 
 
     def test_user_create_endpoint(self):
-        response = self.client.post('/api/v1/users/', {'user': {'username': 'Thor', 'phone_number': '+17195558888'}}, format='json')
+        user = {
+            "username": "Thrasher",
+            "phone_number": "+17196639883"
+        }
+        response = self.client.post('/api/v1/users/', user, format='json')
         user = response.json()
 
-        self.assertEqual(user['username'], 'Thor')
-        self.assertEqual(user['phone_number'], '+17195558888')
+        self.assertEqual(user['username'], 'Thrasher')
+        self.assertEqual(user['phone_number'], '+17196639883')
+
+
+    def test_user_create_endpoint_without_username(self):
+        user = {
+            "phone_number": "+17196639883"
+        }
+        response = self.client.post('/api/v1/users/', user, format='json')
+        user = response.json()
+
+        self.assertEqual(response.status_code, 400)
+
+
+    def test_user_create_endpoint_without_phone_number(self):
+        user = {
+            "username": "Thrasher",
+        }
+        response = self.client.post('/api/v1/users/', user, format='json')
+        user = response.json()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
     def test_get_user_endpoint(self):
@@ -47,13 +71,41 @@ class UserEndpointTest(TestCase):
 
 
     def test_update_put_user_endpoint(self):
-        self.client.post('/api/v1/users/', {'user': {'username': 'Thor', 'phone_number': '+17195558888'}}, format='json')
-        user_id = User.objects.last().id
+        db_user = User.objects.create(username="Thrasher", phone_number="+17192710056")
 
-        response = self.client.put(f'/api/v1/users/{user_id}', {'user': {'username': 'Thor', 'phone_number': '+17192710056'}}, format='json')
+        user = {
+            "username": "Fluffy",
+            "phone_number": "+17196639883"
+
+        }
+
+        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
         end_user = response.json()
 
-        self.assertEqual(end_user['phone_number'], '+17192710056')
+        self.assertEqual(end_user['username'], 'Fluffy')
+        self.assertEqual(end_user['phone_number'], '+17196639883')
+
+
+    def test_put_user_endpoint_no_username(self):
+        db_user = User.objects.create(username="Thor", phone_number="+17195558888")
+        user = {
+            "phone_number": "+17192710056"
+        }
+        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+        end_user = response.json()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+    def test_putput_user_endpoint_no_phone(self):
+        db_user = User.objects.create(username="Thor", phone_number="+17195558888")
+        user = {
+            "username": "Thrasher",
+        }
+        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+        end_user = response.json()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
     def test_sad_path_put_user_endpoint(self):
@@ -61,14 +113,39 @@ class UserEndpointTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_patch_user_endpoint(self):
-        self.client.post('/api/v1/users/', {'user': {'username': 'Thor', 'phone_number': '+17195558888'}}, format='json')
-        user_id = User.objects.last().id
 
-        response = self.client.patch(f'/api/v1/users/{user_id}', {'user': {'username': 'Thor', 'phone_number': '+17192710056'}}, format='json')
+    def test_patch_user_endpoint(self):
+        db_user = User.objects.create(username="Thor", phone_number="+17195558888")
+        user = {
+            "username": "Thor",
+            "phone_number": "+17192710056"
+        }
+        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(end_user['phone_number'], '+17192710056')
+
+
+    def test_patch_user_endpoint_no_username(self):
+        db_user = User.objects.create(username="Thor", phone_number="+17195558888")
+        user = {
+            "phone_number": "+17192710056"
+        }
+        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
+        end_user = response.json()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+    def test_patch_user_endpoint_no_phone(self):
+        db_user = User.objects.create(username="Thor", phone_number="+17195558888")
+        user = {
+            "username": "Thrasher",
+        }
+        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
+        end_user = response.json()
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_sad_path_patch_user_endpoint(self):
         response = self.client.patch('/api/v1/users/10001', {'user': {'username': 'Thor', 'phone_number': '+17192291210'}}, format='json')

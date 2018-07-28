@@ -7,18 +7,18 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 import json
-
+from IPython import embed
 
 class UserViews(viewsets.ViewSet):
 
     def create(self, request):
-        user_attrs = request.data['user']
-        if 'username' in user_attrs.keys() and 'phone_number' in user_attrs.keys():
-            user = User.objects.create(username=user_attrs['username'], phone_number=user_attrs['phone_number'])
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user.id:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, user_id=None):
         user = get_object_or_404(User, id=user_id)
@@ -26,14 +26,12 @@ class UserViews(viewsets.ViewSet):
         return Response(serializer.data)
 
     def update(self, request, user_id=None):
-        user = self.__user_update__(request, user_id)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        user_info = self.__user_update__(request, user_id)
+        return user_info
 
     def partial_update(self, request, user_id=None):
-        user = self.__user_update__(request, user_id)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        user_info = self.__user_update__(request, user_id)
+        return user_info
 
     def destroy(self, request, user_id=None):
         user = get_object_or_404(User, id=user_id)
@@ -42,6 +40,10 @@ class UserViews(viewsets.ViewSet):
 
     def __user_update__(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
-        user_attrs = request.data['user']
-        user.update_user(user_attrs)
-        return user
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.update(instance=user, validated_data=serializer.data)
+            if user.id:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
