@@ -3,8 +3,6 @@ from V1.devices.models import Device
 from V1.users.models import User
 from V1.locations.models import Location
 
-from IPython import embed
-
 # python manage.py test V1/devices/tests
 
 class DeviceModelTestCase(TestCase):

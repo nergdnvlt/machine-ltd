@@ -5,7 +5,6 @@ from V1.users.models import User
 import time
 
 # python manage.py test V1/locations/tests
-from IPython import embed
 
 class LocationModelTestCase(TestCase):
 
