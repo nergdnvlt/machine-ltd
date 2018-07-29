@@ -3,9 +3,8 @@ from rest_framework import status
 from django.test import TestCase
 from V1.users.models import User
 import json
-from IPython import embed
-# python manage.py test V1/users/tests
 
+# python manage.py test V1/users/tests
 class UserEndpointTest(TestCase):
 
     def setUp(self):
