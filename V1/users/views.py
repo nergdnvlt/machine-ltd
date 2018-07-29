@@ -7,7 +7,6 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 import json
-from IPython import embed
 
 class UserViews(viewsets.ViewSet):
 
@@ -43,7 +42,7 @@ class UserViews(viewsets.ViewSet):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.update(instance=user, validated_data=serializer.data)
-            if user.id:
+            if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

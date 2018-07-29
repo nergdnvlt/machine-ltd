@@ -3,7 +3,11 @@ from V1.locations.serializers import LocationSerializer
 from V1.devices.models import Device
 
 class DeviceSerializer(serializers.ModelSerializer):
-    # locations = LocationSerializer(many=True, read_only=True)
+    id = serializers.IntegerField(label='ID', read_only=True)
+    sms_number = serializers.CharField(max_length=100)
+    pin_lat = serializers.FloatField()
+    pin_long = serializers.FloatField()
+    radius = serializers.FloatField(default=500)
     last_location = LocationSerializer(many=False, read_only=True, source='latest_location')
 
     class Meta:
@@ -16,3 +20,9 @@ class DeviceSerializer(serializers.ModelSerializer):
             'radius',
             'last_location',
         ]
+        extra_kwargs = {
+            'user': {'required': False},
+            'id': {'required': False},
+            'radius': {'required': False},
+            'last_location': {'required': False}
+        }
