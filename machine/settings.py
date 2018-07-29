@@ -15,8 +15,15 @@ import dj_database_url
 import django_heroku
 from YamJam import yamjam
 
-TWILIO_SID = yamjam()['machine']['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH = yamjam()['machine']['TWILIO_AUTH_TOKEN']
+if os.environ.get('TWILIO_ACCOUNT_SID'):
+    TWILIO_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+else:
+    TWILIO_SID = yamjam()['machine']['TWILIO_ACCOUNT_SID']
+
+if os.environ.get('TWILIO_AUTH_TOKEN'):
+    TWILIO_AUTH = os.environ.get('TWILIO_AUTH_TOKEN')
+else:
+    TWILIO_AUTH = yamjam()['machine']['TWILIO_AUTH_TOKEN']
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
