@@ -13,9 +13,10 @@ import json
 class LocationViews(viewsets.ViewSet):
 
     def create(self, request, device_id=None):
-        print(f'Here is the request data: {request.data}')
+        data = json.loads(request.data)
+        print(f'Here is the request data: {data}')
         device = get_object_or_404(Device, id=device_id)
-        serializer = LocationSerializer(data=request.data)
+        serializer = LocationSerializer(data=data)
         if serializer.is_valid():
             location = serializer.save(device=device)
             if location:
