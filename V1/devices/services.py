@@ -24,8 +24,6 @@ class TwilioService(Service):
         return message.body
 
 class DeviceService(Service):
-    def __init__(self):
-        None
 
     def create_device(self, request):
         serializer = DeviceSerializer(data=request.data)
