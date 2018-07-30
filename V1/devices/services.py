@@ -10,9 +10,10 @@ class TwilioService(Service):
         self.client = Client(self.twilio_sid, self.twilio_token)
 
     def send_sms(self, number, lat, long):
+        url = f'http://maps.google.com/?q={lat},{long}'
         message = self.client.messages.create(
             to=number,
             from_='+17205130638',
-            body=f'You\'re asset has moved outside the geofence, it is at this location: lattitude: {lat}, and longitude {long}'
+            body=f'Moving asset. Location: lattitude: {lat}, and longitude {long}. {url}'
         )
         return message.body
