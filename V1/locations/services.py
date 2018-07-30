@@ -1,10 +1,8 @@
 import json
-from django.conf import settings
 from service_objects.services import Service
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
-from twilio.rest import Client
 from V1.locations.models import Location
 from V1.devices.models import Device
 from V1.locations.serializers import LocationSerializer
