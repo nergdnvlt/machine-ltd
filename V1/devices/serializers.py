@@ -8,6 +8,7 @@ class DeviceSerializer(serializers.ModelSerializer):
     pin_lat = serializers.FloatField()
     pin_long = serializers.FloatField()
     radius = serializers.FloatField(default=500)
+    alert = serializers.BooleanField(default=True)
     last_location = LocationSerializer(many=False, read_only=True, source='latest_location')
 
     class Meta:
@@ -18,11 +19,13 @@ class DeviceSerializer(serializers.ModelSerializer):
             'pin_lat',
             'pin_long',
             'radius',
+            'alert',
             'last_location',
         ]
         extra_kwargs = {
             'user': {'required': False},
             'id': {'required': False},
             'radius': {'required': False},
+            'alert': {'required': False},
             'last_location': {'required': False}
         }

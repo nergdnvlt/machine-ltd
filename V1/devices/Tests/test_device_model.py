@@ -82,3 +82,26 @@ class DeviceModelTestCase(TestCase):
         self.assertEqual(last_location.id, loc_2.id)
         self.assertEqual(last_location.lat, 39.996292)
         self.assertEqual(last_location.long, -105.23503)
+
+    def test_device_alert_status(self):
+        user = User.objects.create(username='Thrasher',
+                                   phone_number='+17196639883',)
+        device = Device.objects.create(user=user,
+                              sms_number='+17192710056',
+                              pin_lat=39.996665,
+                              pin_long=-105.234931)
+
+        self.assertTrue(device.alert)
+        self.assertTrue(device.is_active)
+
+    def test_device_alert_status_false(self):
+        user = User.objects.create(username='Thrasher',
+                                   phone_number='+17196639883',)
+        device = Device.objects.create(user=user,
+                              sms_number='+17192710056',
+                              pin_lat=39.996665,
+                              pin_long=-105.234931,
+                              alert=False)
+
+        self.assertFalse(device.alert)
+        self.assertFalse(device.is_active())

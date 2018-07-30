@@ -16,7 +16,6 @@ class Location(models.Model):
             self.timestamp = timezone.now()
         return super(Location, self).save(*args, **kwargs)
 
-
     def __distance_calc__(self):
         pin_cord = (self.device.pin_lat, self.device.pin_long)
         cord = (self.lat, self.long)
