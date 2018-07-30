@@ -6,6 +6,8 @@ from V1.users.models import User
 from V1.locations.models import Location
 import json
 
+from IPython import embed
+
 # python manage.py test V1/devices/tests
 
 class DeviceEndpointTest(TestCase):
@@ -156,8 +158,19 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(device['last_location']['long'], -105.23502)
 
 
-    def test_alert_if_location_greater_than_radius(self):
+    def test_alert_if_location_greater_than_radius_when_alert_active(self):
         response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
         device = response.json()
         self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
         self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
+
+    def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
+        start_device = Device.objects.create(
+            sms_number="+17192710056",
+            pin_lat=39.996292,
+            pin_long=-105.23503,
+            alert=False
+        )
+        response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['last_location']['distance'] > device['radius'])
