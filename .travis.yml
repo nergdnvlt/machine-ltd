@@ -1,14 +1,17 @@
 language: python
 python:
-  - 3.6
+- 3.6
 services:
-  - postgresql
+- postgresql
 env:
-  -DJANGO=2.0.7 DB=postgresql
+  matrix:
+  - "-DJANGO=2.0.7 DB=postgresql"
+  - secure: ZXruBHjFA4bNkYwtTW104EOE/AkT7J2nekR6Jy4932IMLtUZJtFVYSau3qBw5AyYYkAOFOtserE7qxSARBtYPoaL7nKYz57AQuNnH1C+00cox/GB1JN2zH1ni1FNLv9R1iqgNY2kBnpRrkhMT6WwGk+HPWSiRn676jEmelw3Hd3gYaGSeeCBsjDqt9XbazUcVVD/JrMOav37+Wg/s+x7jbdzUTwmUjiKO2yyYR+Rcagrp03A/ECTG9IX7cPwDe1a/3Pbn3r6VirOvXGvO/N871jiwva3ekAbGI9UFuoz6ujg2OZXOHtkvH/cxvkQbRDGoHFDSsbmS3RiwfT7sdyjNYZ7TUubb+SxFmhnEBuV7WQ6UBLxgqp1cDTuo37HHEcS5LnkbPdmaH+tKb9FXp083jXfexOlAEVEQDMXEQuvU+Van1drWskV6CeXfsnQvjvgh4wd3u4D9jRoMwHC/GWE16I7VTjJyIDRwka6eFSe68BreJxQfoAeNB+f8rTg2rH7ZMFZ2bo+AAN5FvFIGH4ec2thgRuFFXPN49PgpcV+vcHaBM1mNn5yt0OqFtEZ1hRLSoLjMvEmmZnbVF3JpVhXfEnrnvWOv6jaAXUr7A3ygYdb0TDc1F3PKFVFMdNlEivcpAsx1pWsz3NmxjkdzdxIT8wqmhWFwwd4bPDHKqyYSdg=
+  - secure: pM46hJ2tyohzy2Qm/Is2N6krRT1SXRRyO0PHo7DtWG8zougyiknmZOT0faEr9APayk3ONunJ2QOcAicj4Zni8JAAc2mwj1Ghc9VQ4Ae1lpy61bzni/AKhPKInUWaCJolwsgwnNUCDvf3YiVzLJMcShghVo0BZavCefbslBc1V343mRIo8UwzyU2fOM4Of83BEde0aZppNHo8ui0YlHEhuQ+slR/PnRnzmiFs9Ee7qNn543pOgs6GCMOfbLKLfVs+PgoJB00SO8U2MU+0w/2/3EgCBMTVXobeqI91WIWc3XkhNQtoiS8EO1osW1ZZZsefBJyWKbl1pVOIDnKGYptrjFD42wzAH5lCp/f+d7a6ueiRw/YefNHBw7S0HTqU8ATtGMmNtY7dfQStv7GA6rVnF/wU69DpuNTx0SogsttJr2VsA9aRyGVQato0poqtJd3bJft4hMDNuui0U0ETrZo5ny2j1ivMaUSHDeqiEGCCqvt246N29z+xOomziol5q+5Im4ZUijkerGJRwXm8VXlnbJineQz3rnphw37LAXe9IjM0wGw6euwB6lbtKKetmYWB8nDSf4bJs/RKQV9yAjyeioNrprA1L5we3VTwEYGzhiAM1p5F4DI66DRXAjzTy3o3MD2IG0zsDRk4W54KtrRIfNvEVnLRj7KfWrNrAX85sxo=
 install:
-  - pip3 install -r requirements.txt
+- pip3 install -r requirements.txt
 before_script:
-  - createdb machine-ltd
-  - python3 manage.py migrate
+- createdb machine-ltd
+- python3 manage.py migrate
 script:
-  - python3 manage.py test V1/Tests
+- python3 manage.py test V1/Tests
