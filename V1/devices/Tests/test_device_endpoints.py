@@ -143,21 +143,21 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(history[3]['distance'], loc_1.distance)
 
 
-    # def test_post_location_to_device(self):
-    #     location = {
-    #         "lat": "39.996291",
-    #         "long": "-105.23502"
-    #     }
-    #     response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', location, format='json')
-    #     device = response.json()
-    #
-    #     self.assertEqual(device['id'], self.device.id)
-    #     self.assertEqual(device['last_location']['lat'], 39.996291)
-    #     self.assertEqual(device['last_location']['long'], -105.23502)
-    #
-    #
-    # def test_alert_if_location_greater_than_radius(self):
-    #     response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
-    #     device = response.json()
-    #     self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
-    #     self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
+    def test_post_location_to_device(self):
+        location = {
+            "lat": "39.996291",
+            "long": "-105.23502"
+        }
+        response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', location, format='json')
+        device = response.json()
+
+        self.assertEqual(device['id'], self.device.id)
+        self.assertEqual(device['last_location']['lat'], 39.996291)
+        self.assertEqual(device['last_location']['long'], -105.23502)
+
+
+    def test_alert_if_location_greater_than_radius(self):
+        response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
+        self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
