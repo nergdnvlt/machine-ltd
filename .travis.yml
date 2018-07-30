@@ -1,14 +1,14 @@
 language: python
     python:
-      - "3.7"
+      - 3.7
     services:
       - postgresql
-    env: # => 4
+    env:
       -DJANGO=2.0.7 DB=postgresql
-    install: # => 5
+    install:
       - pip3 install -r requirements.txt
-    before_script: # => 6
+    before_script:
       - createdb machine-ltd
       - python3 manage.py migrate
-    script: # => 7
+    script:
       - python3 manage.py test V1/Tests
