@@ -160,4 +160,4 @@ class DeviceEndpointTest(TestCase):
         response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
         device = response.json()
         self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
-        self.assertEqual(device['message'], "Sent from your Twilio trial account - You're asset has moved outside the geofence, it is at this location: lattitude: 39.999291, and longitude -105.25802")
+        self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
