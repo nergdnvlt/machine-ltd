@@ -17,7 +17,6 @@ class DeviceEndpointTest(TestCase):
         self.thrasher = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         self.device = Device.objects.create(user=self.thrasher,
-                                            sms_number='+17192710056',
                                             pin_lat=39.996292,
                                             pin_long=-105.23503)
 
@@ -27,7 +26,6 @@ class DeviceEndpointTest(TestCase):
         device = response.json()
 
         self.assertEqual(device['id'], self.device.id)
-        self.assertEqual(device['sms_number'], self.device.sms_number)
         self.assertEqual(device['pin_lat'], self.device.pin_lat)
         self.assertEqual(device['pin_long'], self.device.pin_long)
         self.assertEqual(device['radius'], 500)
@@ -35,7 +33,6 @@ class DeviceEndpointTest(TestCase):
     def test_create_device(self):
         user = User.objects.create(username="Fluffy", phone_number="+17196639883")
         device = {
-            "sms_number": "+17192710056",
             "pin_lat": "39.996292",
             "pin_long": "-105.23503"
         }
@@ -44,14 +41,12 @@ class DeviceEndpointTest(TestCase):
         end_device = Device.objects.last()
 
         self.assertEqual(res_device['id'], end_device.id)
-        self.assertEqual(res_device['sms_number'], end_device.sms_number)
         self.assertEqual(res_device['pin_lat'], end_device.pin_lat)
         self.assertEqual(res_device['pin_long'], end_device.pin_long)
         self.assertEqual(res_device['radius'], end_device.radius)
 
     def test_update_device(self):
         up_device = {
-            "sms_number": "+17195555555",
             "pin_lat": "39.996292",
             "pin_long": "-105.23503",
             "radius": '1000',
@@ -60,14 +55,12 @@ class DeviceEndpointTest(TestCase):
         device = response.json()
 
         self.assertEqual(device['id'], self.device.id)
-        self.assertEqual(device['sms_number'], "+17195555555")
         self.assertEqual(device['pin_lat'], self.device.pin_lat)
         self.assertEqual(device['pin_long'], self.device.pin_long)
         self.assertEqual(device['radius'], 1000.0)
 
     def test_patch_update_device(self):
         up_device = {
-            "sms_number": "+17195555555",
             "pin_lat": "39.996292",
             "pin_long": "-105.23503",
             "radius": '1000',
@@ -76,7 +69,6 @@ class DeviceEndpointTest(TestCase):
         device = response.json()
 
         self.assertEqual(device['id'], self.device.id)
-        self.assertEqual(device['sms_number'], "+17195555555")
         self.assertEqual(device['pin_lat'], self.device.pin_lat)
         self.assertEqual(device['pin_long'], self.device.pin_long)
         self.assertEqual(device['radius'], 1000.0)
@@ -166,7 +158,6 @@ class DeviceEndpointTest(TestCase):
 
     def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
         start_device = Device.objects.create(
-            sms_number="+17192710056",
             pin_lat=39.996292,
             pin_long=-105.23503,
             alert=False,

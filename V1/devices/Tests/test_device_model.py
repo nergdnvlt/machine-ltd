@@ -11,15 +11,13 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                              sms_number='+17192710056',
-                              pin_lat=39.996665,
-                              pin_long=-105.234931)
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931)
         Location.objects.create(device=device, lat=39.996292, long=-105.23503)
         Location.objects.create(device=device, lat=39.996292, long=-105.23503)
 
         count = Device.objects.count()
 
-        self.assertEqual(device.sms_number, '+17192710056')
         self.assertEqual(device.user.id, user.id)
         self.assertEqual(device.pin_lat, 39.996665)
         self.assertEqual(device.pin_long, -105.234931)
@@ -30,20 +28,17 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         Device.objects.create(user=user,
-                              sms_number='+17192710056',
                               pin_lat=39.996665,
                               pin_long=-105.234931)
         first_count = Device.objects.count()
 
         Device.objects.create(user=user,
-                              sms_number='+17196639883',
                               pin_lat=22.996665,
                               pin_long=-65.234931)
         device = Device.objects.last()
 
         second_count = Device.objects.count()
 
-        self.assertEqual(device.sms_number, '+17196639883')
         self.assertEqual(device.pin_lat, 22.996665)
         self.assertEqual(device.pin_long, -65.234931)
         self.assertEqual(device.user.id, user.id)
@@ -54,9 +49,8 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                              sms_number='+17192710056',
-                              pin_lat=39.996665,
-                              pin_long=-105.234931)
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931)
         loc_1 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
         loc_2 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
 
@@ -71,9 +65,8 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                              sms_number='+17192710056',
-                              pin_lat=39.996665,
-                              pin_long=-105.234931)
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931)
         loc_1 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
         loc_2 = Location.objects.create(device=device, lat=39.996292, long=-105.23503)
 
@@ -87,9 +80,8 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                              sms_number='+17192710056',
-                              pin_lat=39.996665,
-                              pin_long=-105.234931)
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931)
 
         self.assertTrue(device.alert)
         self.assertTrue(device.is_active)
@@ -98,10 +90,9 @@ class DeviceModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                              sms_number='+17192710056',
-                              pin_lat=39.996665,
-                              pin_long=-105.234931,
-                              alert=False)
+                                       pin_lat=39.996665,
+                                       pin_long=-105.234931,
+                                       alert=False)
 
         self.assertFalse(device.alert)
         self.assertFalse(device.is_active())
