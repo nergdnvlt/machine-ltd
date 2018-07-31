@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db import IntegrityError
 from V1.users.models import User
 
 # python manage.py test V1/users/tests
@@ -26,3 +27,11 @@ class UserModelTestCase(TestCase):
         self.assertEqual(last_user.username, 'Fluffy')
         self.assertEqual(last_user.phone_number, '+17198839888')
         self.assertEqual(second_count, 2)
+
+    def test_uniqueness_of_username(self):
+        user_1 = User.objects.create(username='Thrasher',
+                            phone_number='+17196639883',)
+
+        with self.assertRaises(IntegrityError):
+            User.objects.create(username='Thrasher',
+                                phone_number='+17196639883',)

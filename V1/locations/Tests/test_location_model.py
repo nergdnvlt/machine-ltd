@@ -12,7 +12,6 @@ class LocationModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -31,7 +30,6 @@ class LocationModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -48,7 +46,6 @@ class LocationModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 
@@ -64,7 +61,6 @@ class LocationModelTestCase(TestCase):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
         device = Device.objects.create(user=user,
-                                       sms_number='+17192710056',
                                        pin_lat=39.996665,
                                        pin_long=-105.234931)
 

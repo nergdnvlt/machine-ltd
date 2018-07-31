@@ -143,7 +143,6 @@ DELETE /api/users/:user_id
 #### Devices
 The Device Attributes are
 - User_id: user that the device belongs to
-- sms_number: device phone number
 - radius: geo-fence distance for the device
 - pin_lat: geo-fence latitude coordinate
 - pin_long: geo-fence longitude coordinate
@@ -173,7 +172,6 @@ The response will look like:
 ```
 {
     "id": 1,
-    "sms_number": "+17207891463",
     "pin_lat": 29.9965616,
     "pin_long": -115.2348832,
     "radius": 500.0,
@@ -203,7 +201,6 @@ Set the body of the request to this format (at a minimum the API requires the th
 
 ```
 {
-  "sms_number": "+17192710056",
   "pin_lat": "39.996292",
   "pin_long": "-105.23503"
 }
@@ -228,7 +225,6 @@ Set the body of the request to this format (at a minimum the API requires the th
 
 ```
 {
-  "sms_number": "+17192710056",
   "pin_lat": "39.996292",
   "pin_long": "-105.23503"
 }

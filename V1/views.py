@@ -8,5 +8,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 import json
 
+from IPython import embed
+
 class SessionViews(viewsets.ViewSet):
-    None
+
+    def create(self, request):
+        username = request.data['username']
+        user = User.objects.filter(username=username)
+        embed()
+        serializer = UserSerializer(user, many=False)
