@@ -2,7 +2,10 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.test import TestCase
 from V1.users.models import User
+from V1.devices.models import Device
 import json
+
+from IPython import embed
 
 # python manage.py test V1/users/tests
 class UserEndpointTest(TestCase):
@@ -13,7 +16,14 @@ class UserEndpointTest(TestCase):
                                             phone_number='+17196639883',)
         self.fluffy = User.objects.create(username='Fluffy',
                                           phone_number='+17198839888',)
-
+        self.dev_1 = Device.objects.create(user=self.thrasher,
+                                           sms_number='+17192710056',
+                                           pin_lat=39.996665,
+                                           pin_long=-105.234931)
+        self.dev_2 = Device.objects.create(user=self.thrasher,
+                                           sms_number='+17196639883',
+                                           pin_lat=38.996665,
+                                           pin_long=-104.234931)
 
     def test_user_create_endpoint(self):
         user = {
@@ -53,6 +63,7 @@ class UserEndpointTest(TestCase):
 
         self.assertEqual(user['username'], 'Thrasher')
         self.assertEqual(user['phone_number'], '+17196639883')
+        self.assertEqual(user['devices'][0]['id'], self.dev_1.id )
 
 
     def test_get_another_user_endpoint(self):
@@ -163,3 +174,10 @@ class UserEndpointTest(TestCase):
         response = self.client.delete(f'/api/v1/users/10001')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_get_user_devices_index_endpoint(self):
+        response = self.client.get(f'/api/v1/users/{self.thrasher.id}/devices')
+        devices = response.json()
+
+        self.assertEqual(devices[0]['id'], self.dev_1.id )
+        self.assertEqual(devices[1]['id'], self.dev_2.id )
