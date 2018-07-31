@@ -202,10 +202,10 @@ POST /api/v1/users/:user_id/devices
 Set the body of the request to this format (at a minimum the API requires the three following attributes, however you can also set the alert and the radius(in meters)):
 
 ```
-device = {
-    "sms_number": "+17192710056",
-    "pin_lat": "39.996292",
-    "pin_long": "-105.23503"
+{
+  "sms_number": "+17192710056",
+  "pin_lat": "39.996292",
+  "pin_long": "-105.23503"
 }
 ```
 
@@ -227,10 +227,10 @@ PATCH /api/v1/users/devices/:device_id
 Set the body of the request to this format (at a minimum the API requires the three following attributes, however again you can also reset the alert and the radius(in meters)):
 
 ```
-device = {
-    "sms_number": "+17192710056",
-    "pin_lat": "39.996292",
-    "pin_long": "-105.23503"
+{
+  "sms_number": "+17192710056",
+  "pin_lat": "39.996292",
+  "pin_long": "-105.23503"
 }
 ```
 
