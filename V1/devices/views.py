@@ -8,8 +8,6 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from IPython import embed
-
 class DeviceViews(viewsets.ViewSet):
 
     def list(self, request, user_id=None):
@@ -34,3 +32,8 @@ class DeviceViews(viewsets.ViewSet):
     def partial_update(self, request, device_id=None):
         device_info = DeviceService().update_device(request, device_id)
         return device_info
+
+    def destroy(self, request, device_id=None):
+        device = get_object_or_404(Device, id=device_id)
+        device.delete()
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)

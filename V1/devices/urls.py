@@ -8,6 +8,7 @@ urlpatterns = [
         'get': 'retrieve',
         'put': 'update',
         'patch': 'partial_update',
+        'delete': 'destroy',
     })),
     path('<device_id>/locations', LocationViews.as_view({
         'post': 'create',

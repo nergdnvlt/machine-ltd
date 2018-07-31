@@ -175,3 +175,16 @@ class DeviceEndpointTest(TestCase):
         response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
         device = response.json()
         self.assertTrue(device['last_location']['distance'] > device['radius'])
+
+    def test_delete_device_endpoint(self):
+        thrasher_2 = User.objects.create(username='Thrasher',
+                                   phone_number='+17196639883',)
+
+        response = self.client.delete(f'/api/v1/devices/{thrasher_2.id}')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_sad_path_delete_user_endpoint(self):
+        response = self.client.delete(f'/api/v1/devices/10001')
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
