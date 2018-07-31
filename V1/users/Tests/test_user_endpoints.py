@@ -17,23 +17,21 @@ class UserEndpointTest(TestCase):
         self.fluffy = User.objects.create(username='Fluffy',
                                           phone_number='+17198839888',)
         self.dev_1 = Device.objects.create(user=self.thrasher,
-                                           sms_number='+17192710056',
                                            pin_lat=39.996665,
                                            pin_long=-105.234931)
         self.dev_2 = Device.objects.create(user=self.thrasher,
-                                           sms_number='+17196639883',
                                            pin_lat=38.996665,
                                            pin_long=-104.234931)
 
     def test_user_create_endpoint(self):
         user = {
-            "username": "Thrasher",
+            "username": "Thor",
             "phone_number": "+17196639883"
         }
         response = self.client.post('/api/v1/users/', user, format='json')
         user = response.json()
 
-        self.assertEqual(user['username'], 'Thrasher')
+        self.assertEqual(user['username'], 'Thor')
         self.assertEqual(user['phone_number'], '+17196639883')
 
 
@@ -81,10 +79,10 @@ class UserEndpointTest(TestCase):
 
 
     def test_update_put_user_endpoint(self):
-        db_user = User.objects.create(username="Thrasher", phone_number="+17192710056")
+        db_user = User.objects.create(username="KingWombat", phone_number="+17192710056")
 
         user = {
-            "username": "Fluffy",
+            "username": "Odin",
             "phone_number": "+17196639883"
 
         }
@@ -92,7 +90,7 @@ class UserEndpointTest(TestCase):
         response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
         end_user = response.json()
 
-        self.assertEqual(end_user['username'], 'Fluffy')
+        self.assertEqual(end_user['username'], 'Odin')
         self.assertEqual(end_user['phone_number'], '+17196639883')
 
 
