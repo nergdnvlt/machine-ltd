@@ -20,6 +20,10 @@ class UserEndpointTest(TestCase):
                                            sms_number='+17192710056',
                                            pin_lat=39.996665,
                                            pin_long=-105.234931)
+        self.dev_2 = Device.objects.create(user=self.thrasher,
+                                           sms_number='+17196639883',
+                                           pin_lat=38.996665,
+                                           pin_long=-104.234931)
 
     def test_user_create_endpoint(self):
         user = {
@@ -56,7 +60,7 @@ class UserEndpointTest(TestCase):
     def test_get_user_endpoint(self):
         response = self.client.get(f'/api/v1/users/{self.thrasher.id}')
         user = response.json()
-        embed()
+
         self.assertEqual(user['username'], 'Thrasher')
         self.assertEqual(user['phone_number'], '+17196639883')
         self.assertEqual(user['devices'][0]['id'], self.dev_1.id )
@@ -170,3 +174,10 @@ class UserEndpointTest(TestCase):
         response = self.client.delete(f'/api/v1/users/10001')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_get_user_devices_index_endpoint(self):
+        response = self.client.get(f'/api/v1/users/{self.thrasher.id}/devices')
+        devices = response.json()
+
+        self.assertEqual(devices[0]['id'], self.dev_1.id )
+        self.assertEqual(devices[1]['id'], self.dev_2.id )

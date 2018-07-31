@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from V1.users.views import UserViews
+from V1.devices.views import DeviceViews
 
 urlpatterns = [
     path('', UserViews.as_view({'post': 'create'})),
@@ -8,4 +9,5 @@ urlpatterns = [
                                                   'put': 'update',
                                                   'patch': 'partial_update',
                                                   'delete': 'destroy'})),
+    path('<user_id>/devices', DeviceViews.as_view({'get': 'list'})),
 ]

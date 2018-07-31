@@ -20,3 +20,4 @@ class Device(models.Model):
 
     class Meta:
         db_table = 'devices'
+        ordering = ('id',)
