@@ -65,13 +65,9 @@ class LocationModelTestCase(TestCase):
                                        pin_long=-105.234931)
 
         location_1 = Location.objects.create(device=device, lat=38.985555, long=-105.235555)
-        time.sleep(1)
         location_2 = Location.objects.create(device=device, lat=37.985555, long=-105.235555)
-        time.sleep(1)
         location_3 = Location.objects.create(device=device, lat=36.985555, long=-105.235555)
-        time.sleep(1)
         location_4 = Location.objects.create(device=device, lat=35.985555, long=-105.235555)
-        time.sleep(1)
         location_5 = Location.objects.create(device=device, lat=34.985555, long=-105.235555)
 
         locations = Location.objects.all()

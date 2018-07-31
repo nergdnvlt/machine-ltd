@@ -14,6 +14,6 @@ class SessionViews(viewsets.ViewSet):
 
     def create(self, request):
         username = request.data['username']
-        user = User.objects.filter(username=username)
-        embed()
+        user = get_object_or_404(User, username=username)
         serializer = UserSerializer(user, many=False)
+        return Response({"user": serializer.data, "session": True}, status=status.HTTP_200_OK)

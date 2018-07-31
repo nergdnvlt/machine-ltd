@@ -25,4 +25,14 @@ class SessionEndpointTest(TestCase):
             "username": "Thrasher"
         }
         response = self.client.post('/api/v1/sessions', user, format='json')
-        user = response.json()
+        user_session = response.json()
+
+        self.assertEqual(user_session['session'], True)
+        self.assertEqual(user_session['user']['username'], self.thrasher.username)
+
+    def test_user_no_user(self):
+        user = {
+            "username": "Bob"
+        }
+        response = self.client.post('/api/v1/sessions', user, format='json')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
