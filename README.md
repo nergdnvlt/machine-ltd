@@ -340,6 +340,12 @@ This will return the device info as JSON
 - Model Level Testing
 - API Request Testing<br>
 
+
+To run all tests:
+```
+python3 manage.py test V1/Tests
+```
+
 <br>
 
 
