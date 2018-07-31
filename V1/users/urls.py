@@ -4,10 +4,17 @@ from V1.users.views import UserViews
 from V1.devices.views import DeviceViews
 
 urlpatterns = [
-    path('', UserViews.as_view({'post': 'create'})),
-    path('<user_id>', UserViews.as_view({'get': 'retrieve',
-                                                  'put': 'update',
-                                                  'patch': 'partial_update',
-                                                  'delete': 'destroy'})),
-    path('<user_id>/devices', DeviceViews.as_view({'get': 'list'})),
+    path('', UserViews.as_view({
+        'post': 'create'
+    })),
+    path('<user_id>', UserViews.as_view({
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update',
+        'delete': 'destroy'
+    })),
+    path('<user_id>/devices', DeviceViews.as_view({
+        'get': 'list',
+        'post': 'create',
+    })),
 ]

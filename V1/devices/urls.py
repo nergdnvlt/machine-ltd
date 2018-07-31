@@ -4,9 +4,6 @@ from V1.devices.views import DeviceViews
 from V1.locations.views import LocationViews
 
 urlpatterns = [
-    path('', DeviceViews.as_view({
-        'post': 'create'
-    })),
     path('<device_id>', DeviceViews.as_view({
         'get': 'retrieve',
         'put': 'update',

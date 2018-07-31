@@ -39,7 +39,7 @@ class DeviceEndpointTest(TestCase):
             "pin_lat": "39.996292",
             "pin_long": "-105.23503"
         }
-        response = self.client.post('/api/v1/devices/', device, format='json')
+        response = self.client.post(f'/api/v1/users/{user.id}/devices', device, format='json')
         res_device = response.json()
         end_device = Device.objects.last()
 
@@ -145,32 +145,33 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(history[3]['distance'], loc_1.distance)
 
 
-    # def test_post_location_to_device(self):
-    #     location = {
-    #         "lat": "39.996291",
-    #         "long": "-105.23502"
-    #     }
-    #     response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', location, format='json')
-    #     device = response.json()
-    #
-    #     self.assertEqual(device['id'], self.device.id)
-    #     self.assertEqual(device['last_location']['lat'], 39.996291)
-    #     self.assertEqual(device['last_location']['long'], -105.23502)
-    #
-    #
-    # def test_alert_if_location_greater_than_radius_when_alert_active(self):
-    #     response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
-    #     device = response.json()
-    #     self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
-    #     self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
-    #
-    # def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
-    #     start_device = Device.objects.create(
-    #         sms_number="+17192710056",
-    #         pin_lat=39.996292,
-    #         pin_long=-105.23503,
-    #         alert=False
-    #     )
-    #     response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
-    #     device = response.json()
-    #     self.assertTrue(device['last_location']['distance'] > device['radius'])
+    def test_post_location_to_device(self):
+        location = {
+            "lat": "39.996291",
+            "long": "-105.23502"
+        }
+        response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', location, format='json')
+        device = response.json()
+
+        self.assertEqual(device['id'], self.device.id)
+        self.assertEqual(device['last_location']['lat'], 39.996291)
+        self.assertEqual(device['last_location']['long'], -105.23502)
+
+
+    def test_alert_if_location_greater_than_radius_when_alert_active(self):
+        response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
+        self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
+
+    def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
+        start_device = Device.objects.create(
+            sms_number="+17192710056",
+            pin_lat=39.996292,
+            pin_long=-105.23503,
+            alert=False,
+            user=self.thrasher
+        )
+        response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['last_location']['distance'] > device['radius'])

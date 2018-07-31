@@ -8,6 +8,8 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from IPython import embed
+
 class DeviceViews(viewsets.ViewSet):
 
     def list(self, request, user_id=None):
@@ -21,8 +23,8 @@ class DeviceViews(viewsets.ViewSet):
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request):
-        create_response = DeviceService().create_device(request)
+    def create(self, request, user_id=None):
+        create_response = DeviceService().create_device(request, user_id)
         return create_response
 
     def update(self, request, device_id=None):

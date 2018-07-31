@@ -1,5 +1,6 @@
 from twilio.rest import Client
 from V1.devices.models import Device
+from V1.users.models import User
 from django.shortcuts import get_object_or_404
 from service_objects.services import Service
 from V1.devices.serializers import DeviceSerializer
@@ -25,10 +26,11 @@ class TwilioService(Service):
 
 class DeviceService(Service):
 
-    def create_device(self, request):
+    def create_device(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
         serializer = DeviceSerializer(data=request.data)
         if serializer.is_valid():
-            device = serializer.save()
+            device = serializer.save(user=user)
             if device.id:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
