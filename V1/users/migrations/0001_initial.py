@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=100)),
                 ('phone_number', models.CharField(max_length=100)),
+                ('slug', models.CharField(max_length=100)),
             ],
         ),
     ]

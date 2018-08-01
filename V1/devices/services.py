@@ -26,8 +26,8 @@ class TwilioService(Service):
 
 class DeviceService(Service):
 
-    def create_device(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
+    def create_device(self, request, username):
+        user = get_object_or_404(User, username=username)
         serializer = DeviceSerializer(data=request.data)
         if serializer.is_valid():
             device = serializer.save(user=user)

@@ -7,13 +7,13 @@ urlpatterns = [
     path('', UserViews.as_view({
         'post': 'create'
     })),
-    path('<user_id>', UserViews.as_view({
+    path('<username>', UserViews.as_view({
         'get': 'retrieve',
         'put': 'update',
         'patch': 'partial_update',
         'delete': 'destroy'
     })),
-    path('<user_id>/devices', DeviceViews.as_view({
+    path('<username>/devices', DeviceViews.as_view({
         'get': 'list',
         'post': 'create',
     })),
