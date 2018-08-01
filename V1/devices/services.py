@@ -8,8 +8,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
 
-from IPython import embed
-
 class TwilioService(Service):
 
     def __init__(self):
@@ -22,7 +20,7 @@ class TwilioService(Service):
         message = self.client.messages.create(
             to=number,
             from_='+17205130638',
-            body=f'Moving asset. Location: lattitude: {lat}, and longitude {long}. {url}'
+            body=f'Moving asset. Location: latitude: {lat}, and longitude {long}. {url}'
         )
         return message.body
 

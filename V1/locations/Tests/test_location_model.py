@@ -5,7 +5,6 @@ from V1.users.models import User
 import time
 
 # python manage.py test V1/locations/tests
-
 class LocationModelTestCase(TestCase):
 
     def test_device_saves_to_db(self):
@@ -56,6 +55,7 @@ class LocationModelTestCase(TestCase):
         self.assertEqual(saved_location.lat, 39.985555)
         self.assertEqual(saved_location.long, -105.235555)
         self.assertEqual(saved_location.distance, 1234.74348675545)
+
 
     def test_ordering_of_locations(self):
         user = User.objects.create(username='Thrasher',

@@ -5,8 +5,6 @@ from V1.users.models import User
 from V1.devices.models import Device
 import json
 
-from IPython import embed
-
 # python manage.py test V1/Tests
 class SessionEndpointTest(TestCase):
 
@@ -20,6 +18,7 @@ class SessionEndpointTest(TestCase):
                                            pin_lat=39.996665,
                                            pin_long=-105.234931)
 
+
     def test_user_can_create_new_session(self):
         user = {
             "username": "Thrasher"
@@ -29,6 +28,7 @@ class SessionEndpointTest(TestCase):
 
         self.assertEqual(user_session['session'], True)
         self.assertEqual(user_session['user']['username'], self.thrasher.username)
+
 
     def test_user_no_user(self):
         user = {

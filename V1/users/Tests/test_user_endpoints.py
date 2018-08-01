@@ -5,8 +5,6 @@ from V1.users.models import User
 from V1.devices.models import Device
 import json
 
-from IPython import embed
-
 # python manage.py test V1/users/tests
 class UserEndpointTest(TestCase):
 
@@ -22,6 +20,7 @@ class UserEndpointTest(TestCase):
         self.dev_2 = Device.objects.create(user=self.thrasher,
                                            pin_lat=38.996665,
                                            pin_long=-104.234931)
+
 
     def test_user_create_endpoint(self):
         user = {
@@ -155,10 +154,12 @@ class UserEndpointTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+
     def test_sad_path_patch_user_endpoint(self):
         response = self.client.patch('/api/v1/users/10001', {'user': {'username': 'Thor', 'phone_number': '+17192291210'}}, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
     def test_delete_user_endpoint(self):
         self.client.post('/api/v1/users/', {'user': {'username': 'Thor', 'phone_number': '+17195558888'}}, format='json')
@@ -168,10 +169,12 @@ class UserEndpointTest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+
     def test_sad_path_delete_user_endpoint(self):
         response = self.client.delete(f'/api/v1/users/10001')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
     def test_get_user_devices_index_endpoint(self):
         response = self.client.get(f'/api/v1/users/{self.thrasher.id}/devices')
