@@ -10,8 +10,8 @@ from rest_framework.response import Response
 
 class DeviceViews(viewsets.ViewSet):
 
-    def list(self, request, user_id=None):
-        user = get_object_or_404(User, id=user_id)
+    def list(self, request, username=None):
+        user = get_object_or_404(User, username=username)
         devices = user.devices.all()
         serializer = DeviceSerializer(devices, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -21,8 +21,8 @@ class DeviceViews(viewsets.ViewSet):
         serializer = DeviceSerializer(device, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, user_id=None):
-        create_response = DeviceService().create_device(request, user_id)
+    def create(self, request, username=None):
+        create_response = DeviceService().create_device(request, username)
         return create_response
 
     def update(self, request, device_id=None):

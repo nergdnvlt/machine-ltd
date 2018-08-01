@@ -55,7 +55,7 @@ class UserEndpointTest(TestCase):
 
 
     def test_get_user_endpoint(self):
-        response = self.client.get(f'/api/v1/users/{self.thrasher.id}')
+        response = self.client.get(f'/api/v1/users/{self.thrasher.username}')
         user = response.json()
 
         self.assertEqual(user['username'], 'Thrasher')
@@ -64,7 +64,7 @@ class UserEndpointTest(TestCase):
 
 
     def test_get_another_user_endpoint(self):
-        response = self.client.get(f'/api/v1/users/{self.fluffy.id}')
+        response = self.client.get(f'/api/v1/users/{self.fluffy.username}')
         user = response.json()
 
         self.assertEqual(user['username'], 'Fluffy')
@@ -72,7 +72,7 @@ class UserEndpointTest(TestCase):
 
 
     def test_get_single_user_sad_path_endpoint(self):
-        response = self.client.get('/api/v1/users/10001')
+        response = self.client.get('/api/v1/users/billybob')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -86,7 +86,7 @@ class UserEndpointTest(TestCase):
 
         }
 
-        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.put(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(end_user['username'], 'Odin')
@@ -98,7 +98,7 @@ class UserEndpointTest(TestCase):
         user = {
             "phone_number": "+17192710056"
         }
-        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.put(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -109,7 +109,7 @@ class UserEndpointTest(TestCase):
         user = {
             "username": "Thrasher",
         }
-        response = self.client.put(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.put(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -127,7 +127,7 @@ class UserEndpointTest(TestCase):
             "username": "Thor",
             "phone_number": "+17192710056"
         }
-        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.patch(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(end_user['phone_number'], '+17192710056')
@@ -138,7 +138,7 @@ class UserEndpointTest(TestCase):
         user = {
             "phone_number": "+17192710056"
         }
-        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.patch(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -149,7 +149,7 @@ class UserEndpointTest(TestCase):
         user = {
             "username": "Thrasher",
         }
-        response = self.client.patch(f'/api/v1/users/{db_user.id}', user, format='json')
+        response = self.client.patch(f'/api/v1/users/{db_user.username}', user, format='json')
         end_user = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -163,9 +163,9 @@ class UserEndpointTest(TestCase):
 
     def test_delete_user_endpoint(self):
         self.client.post('/api/v1/users/', {'user': {'username': 'Thor', 'phone_number': '+17195558888'}}, format='json')
-        user_id = User.objects.last().id
+        username = User.objects.last().username
 
-        response = self.client.delete(f'/api/v1/users/{user_id}')
+        response = self.client.delete(f'/api/v1/users/{username}')
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -177,7 +177,7 @@ class UserEndpointTest(TestCase):
 
 
     def test_get_user_devices_index_endpoint(self):
-        response = self.client.get(f'/api/v1/users/{self.thrasher.id}/devices')
+        response = self.client.get(f'/api/v1/users/{self.thrasher.username}/devices')
         devices = response.json()
 
         self.assertEqual(devices[0]['id'], self.dev_1.id )

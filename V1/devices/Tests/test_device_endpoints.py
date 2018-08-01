@@ -34,7 +34,7 @@ class DeviceEndpointTest(TestCase):
             "pin_lat": "39.996292",
             "pin_long": "-105.23503"
         }
-        response = self.client.post(f'/api/v1/users/{user.id}/devices', device, format='json')
+        response = self.client.post(f'/api/v1/users/{user.username}/devices', device, format='json')
         res_device = response.json()
         end_device = Device.objects.last()
 

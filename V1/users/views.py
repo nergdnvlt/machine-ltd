@@ -19,26 +19,26 @@ class UserViews(viewsets.ViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request, user_id=None):
-        user = get_object_or_404(User, id=user_id)
+    def retrieve(self, request, username=None):
+        user = get_object_or_404(User, username=username)
         serializer = UserSerializer(user, many=False)
         return Response(serializer.data)
 
-    def update(self, request, user_id=None):
-        user_info = self.__user_update__(request, user_id)
+    def update(self, request, username=None):
+        user_info = self.__user_update__(request, username)
         return user_info
 
-    def partial_update(self, request, user_id=None):
-        user_info = self.__user_update__(request, user_id)
+    def partial_update(self, request, username=None):
+        user_info = self.__user_update__(request, username)
         return user_info
 
-    def destroy(self, request, user_id=None):
-        user = get_object_or_404(User, id=user_id)
+    def destroy(self, request, username=None):
+        user = get_object_or_404(User, username=username)
         user.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
-    def __user_update__(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
+    def __user_update__(self, request, username):
+        user = get_object_or_404(User, username=username)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.update(instance=user, validated_data=serializer.data)
