@@ -4,7 +4,6 @@ from V1.users.models import User
 from V1.locations.models import Location
 
 # python manage.py test V1/devices/tests
-
 class DeviceModelTestCase(TestCase):
 
     def test_device_saves_to_db(self):
@@ -45,6 +44,7 @@ class DeviceModelTestCase(TestCase):
         self.assertEqual(first_count, 1)
         self.assertEqual(second_count, 2)
 
+
     def test_location_saves_to_device(self):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
@@ -61,6 +61,7 @@ class DeviceModelTestCase(TestCase):
         self.assertEqual(device.locations.first().lat, 39.996292)
         self.assertEqual(device.locations.first().long, -105.23503)
 
+
     def test_location_saves_to_device(self):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
@@ -76,6 +77,7 @@ class DeviceModelTestCase(TestCase):
         self.assertEqual(last_location.lat, 39.996292)
         self.assertEqual(last_location.long, -105.23503)
 
+
     def test_device_alert_status(self):
         user = User.objects.create(username='Thrasher',
                                    phone_number='+17196639883',)
@@ -85,6 +87,7 @@ class DeviceModelTestCase(TestCase):
 
         self.assertTrue(device.alert)
         self.assertTrue(device.is_active)
+
 
     def test_device_alert_status_false(self):
         user = User.objects.create(username='Thrasher',

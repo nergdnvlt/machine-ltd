@@ -20,6 +20,8 @@ This project is designed to be modular, and service oriented. The API itself is 
 - [Basic Repo Info](#basic-repo-info)
 - [Database and Schema](#database-and-schema)
 - [API End Points](#api-end-points)
+- [Setup](#setup)
+- [Contributions](#contributions)
 - [The Test Suite](#the-test-suite)
 - [Authors](#authors)
 

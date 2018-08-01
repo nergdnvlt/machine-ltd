@@ -6,10 +6,7 @@ from V1.users.models import User
 from V1.locations.models import Location
 import json
 
-from IPython import embed
-
 # python manage.py test V1/devices/tests
-
 class DeviceEndpointTest(TestCase):
 
     def setUp(self):
@@ -30,6 +27,7 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(device['pin_long'], self.device.pin_long)
         self.assertEqual(device['radius'], 500)
 
+
     def test_create_device(self):
         user = User.objects.create(username="Fluffy", phone_number="+17196639883")
         device = {
@@ -45,6 +43,7 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(res_device['pin_long'], end_device.pin_long)
         self.assertEqual(res_device['radius'], end_device.radius)
 
+
     def test_update_device(self):
         up_device = {
             "pin_lat": "39.996292",
@@ -58,6 +57,7 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(device['pin_lat'], self.device.pin_lat)
         self.assertEqual(device['pin_long'], self.device.pin_long)
         self.assertEqual(device['radius'], 1000.0)
+
 
     def test_patch_update_device(self):
         up_device = {
@@ -149,33 +149,36 @@ class DeviceEndpointTest(TestCase):
         self.assertEqual(device['last_location']['lat'], 39.996291)
         self.assertEqual(device['last_location']['long'], -105.23502)
 
-    #
-    # def test_alert_if_location_greater_than_radius_when_alert_active(self):
-    #     response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
-    #     device = response.json()
-    #     self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
-    #     self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: lattitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
-    #
-    # def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
-    #     start_device = Device.objects.create(
-    #         pin_lat=39.996292,
-    #         pin_long=-105.23503,
-    #         alert=False,
-    #         user=self.thrasher
-    #     )
-    #     response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
-    #     device = response.json()
-    #     self.assertTrue(device['last_location']['distance'] > device['radius'])
-    #
-    # def test_delete_device_endpoint(self):
-    #     thrasher_2 = User.objects.create(username='Thrasher',
-    #                                phone_number='+17196639883',)
-    #
-    #     response = self.client.delete(f'/api/v1/devices/{thrasher_2.id}')
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    #
-    # def test_sad_path_delete_user_endpoint(self):
-    #     response = self.client.delete(f'/api/v1/devices/10001')
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_alert_if_location_greater_than_radius_when_alert_active(self):
+        response = self.client.post(f'/api/v1/devices/{self.device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['device']['last_location']['distance'] > device['device']['radius'])
+        self.assertEqual(device['message'], "Sent from your Twilio trial account - Moving asset. Location: latitude: 39.999291, and longitude -105.25802. http://maps.google.com/?q=39.999291,-105.25802")
+
+
+    def test_alert_if_location_greater_than_radius_when_alert_not_active(self):
+        start_device = Device.objects.create(
+            pin_lat=39.996292,
+            pin_long=-105.23503,
+            alert=False,
+            user=self.thrasher
+        )
+        response = self.client.post(f'/api/v1/devices/{start_device.id}/locations', {"lat": "39.999291", "long": "-105.25802"}, format='json')
+        device = response.json()
+        self.assertTrue(device['last_location']['distance'] > device['radius'])
+
+
+    def test_delete_device_endpoint(self):
+        thrasher_2 = User.objects.create(username='Ichibod',
+                                   phone_number='+17196639883',)
+
+        response = self.client.delete(f'/api/v1/devices/{thrasher_2.id}')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+    def test_sad_path_delete_user_endpoint(self):
+        response = self.client.delete(f'/api/v1/devices/10001')
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
