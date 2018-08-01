@@ -329,6 +329,78 @@ This will return the device info as JSON
 
 ---
 
+## Setup
+
+Make sure you have Python3, Django2.7, pip3, pipenv all installed for your development environment locally.
+
+## Initial Setup
+
+#### Clone this repository:
+
+  ```shell
+  git clone git@github.com:nergdnvlt/machine-ltd.git
+  ```
+
+#### Create a virtualenv
+
+  ```shell
+  pipenv shell
+  ```
+
+#### Begin setting up the project
+
+  ```shell
+  cd machine-ltd
+  ```
+Then setup the requirements:
+
+  ```shell
+  pip3 install -r requirements/local.txt
+  ```
+
+#### Set up databases using PostgreSQL
+
+  ```shell
+  createdb machine-ltd;
+  createdb machine-ltd-test;
+  ```
+
+#### Migrate
+
+  ```shell
+  python3 manage.py makemigrations
+  python3 manage.py migrate
+  ```
+
+## Run the Server
+
+To see your code in action locally, you need to fire up a development server. Use the command:
+
+```shell
+python3 manage.py runserver
+```
+
+Once the server is running, visit API endpoints in your browser:
+
+* `http://localhost:8000/` to run your application.
+
+
+<br>
+
+---
+
+###Contributions:
+
+To contribute to this application:
+
+- Fork the repo.
+- Checkout a branch.
+- Do you.
+- Submit a PR from your branch to this repo's master.
+- Boom. Open Source.
+
+---
+
 ### The Test Suite
 
 ##### About The Tests:
