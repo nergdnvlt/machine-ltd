@@ -170,11 +170,13 @@ class DeviceEndpointTest(TestCase):
 
 
     def test_delete_device_endpoint(self):
-        thrasher_2 = User.objects.create(username='Ichibod',
-                                   phone_number='+17196639883',)
+        user = User.objects.create(username='Ichibod',
+                                   phone_number='+17196639883')
+        device = Device.objects.create(user=user,
+                                            pin_lat=39.996292,
+                                            pin_long=-105.23503)
 
-        response = self.client.delete(f'/api/v1/devices/{thrasher_2.id}')
-
+        response = self.client.delete(f'/api/v1/devices/{device.id}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
