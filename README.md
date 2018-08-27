@@ -9,7 +9,8 @@ Production Site:<br>
 
 API Base URL:<br>
 [Machine Ltd API - Base Url (No Endpoint)](https://machine-ltd.herokuapp.com/api/v1)<br>
-[Machine Ltd API- Device](https://machine-ltd.herokuapp.com/api/v1/devices/1)<br>
+[Machine Ltd API - Device](https://machine-ltd.herokuapp.com/api/v1/devices/1)<br>
+[Machine Ltd API - Location History](https://machine-ltd.herokuapp.com/api/v1/devices/1/history)<br> 
 
 
 Pitch:
