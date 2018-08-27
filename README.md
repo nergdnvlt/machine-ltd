@@ -8,7 +8,9 @@ Production Site:<br>
 [No Site Yet](#) <br>
 
 API Base URL:<br>
-[Machine Ltd API](https://machine-ltd.herokuapp.com/api/v1)<br>
+[Machine Ltd API - Base Url (No Endpoint)](https://machine-ltd.herokuapp.com/api/v1)<br>
+[Machine Ltd API- Device](https://machine-ltd.herokuapp.com/api/v1/devices/1)<br>
+
 
 Pitch:
 This is an asset tracking application that allows a user to set a geo-fence by  a center GPS coordinate and a radius. The hardware will then make post requests to the 'api/v1/devices/:device_id/locations' endpoint which will create a new database entry for the devices location. If the location is outside the geo-fence it will send an alert to the user by sms.
